@@ -27,7 +27,7 @@ public class MainApp extends Application {
 		stage.setResizable(false);
 		stage.show();
 	}
-	// dlasknsa
+	// saklnddask
 
 	// -------------------------------------------------------------------------
 
