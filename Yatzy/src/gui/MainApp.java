@@ -71,8 +71,8 @@ public class MainApp extends Application {
 			cbxHolds[i] = new CheckBox();
 			dicePane.add(cbxHolds[i], i, 1);
 			cbxHolds[i].setText("Hold");
-
 		}
+
 		// add txfValues, cbxHolds, lblRolled and btnRoll
 		// TODO
 
