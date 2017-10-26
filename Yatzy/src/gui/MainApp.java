@@ -65,6 +65,9 @@ public class MainApp extends Application {
 		for (int i = 0; i < 5; i++) {
 			txfValues[i] = new TextField();
 			dicePane.add(txfValues[i], i, 0);
+			txfValues[i].setEditable(false);
+			txfValues[i].setMinSize(50, 50);
+			txfValues[i].setMaxSize(50, 50);
 		}
 		// add txfValues, chbHolds, lblRolled and btnRoll
 		// TODO
