@@ -82,6 +82,7 @@ public class MainApp extends Application {
 
 		Button btnRoll = new Button("Roll");
 		dicePane.add(btnRoll, 5, 0);
+		btnRoll.setOnAction(event -> controller.newRollAction());
 
 		// ---------------------------------------------------------------------
 
@@ -107,6 +108,7 @@ public class MainApp extends Application {
 			txfResults[i].setMaxWidth(w);
 		}
 
+		// txfSumSame.setStyle("-fx-background-color: -#cee51c");
 		// Todo:
 		// Change color of SumSame, etc.
 
@@ -124,6 +126,15 @@ public class MainApp extends Application {
 	private class Controller {
 		private YatzyDice dice = new YatzyDice();
 
+		public void newRollAction() {
+			boolean[] array = { cbxHolds[0].isSelected(), cbxHolds[1].isSelected(), cbxHolds[2].isSelected(),
+					cbxHolds[3].isSelected(), cbxHolds[4].isSelected() };
+
+			// dice.throwDice(array);
+			// for (int i : dice.getValues()) {
+			// txfValues[i] = i;
+			// }
+		}
 		// Create a method for btnRoll's action.
 		// Hint: Create small helper methods to be used in the action method.
 		// TODO
