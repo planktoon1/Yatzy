@@ -3,7 +3,9 @@ package gui;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -71,10 +73,13 @@ public class MainApp extends Application {
 			cbxHolds[i] = new CheckBox();
 			dicePane.add(cbxHolds[i], i, 1);
 			cbxHolds[i].setText("Hold");
-
 		}
-		// add txfValues, cbxHolds, lblRolled and btnRoll
-		// TODO
+
+		Label lblRolled = new Label("Rolled:");
+		dicePane.add(lblRolled, 5, 1);
+
+		Button btnRoll = new Button("Roll");
+		dicePane.add(btnRoll, 5, 0);
 
 		// ---------------------------------------------------------------------
 
