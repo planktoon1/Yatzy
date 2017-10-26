@@ -3,7 +3,9 @@ package gui;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -38,6 +40,8 @@ public class MainApp extends Application {
 	// For results not set yet, the possible result of
 	// the actual face values of the 5 dice are shown.
 	private final TextField[] txfResults = new TextField[15];
+
+	private final Label[] lblResults = new Label[15];
 	// Shows points in sums, bonus and total.
 	private final TextField txfSumSame = new TextField(), txfBonus = new TextField(), txfSumOther = new TextField(),
 			txfTotal = new TextField();
@@ -73,8 +77,11 @@ public class MainApp extends Application {
 			cbxHolds[i].setText("Hold");
 		}
 
-		// add txfValues, cbxHolds, lblRolled and btnRoll
-		// TODO
+		Label lblRolled = new Label("Rolled:");
+		dicePane.add(lblRolled, 5, 1);
+
+		Button btnRoll = new Button("Roll");
+		dicePane.add(btnRoll, 5, 0);
 
 		// ---------------------------------------------------------------------
 
@@ -87,6 +94,18 @@ public class MainApp extends Application {
 		scorePane.setStyle("-fx-border-color: black");
 		int w = 50; // width of the text fields
 
+		String[] names = { "1'ere", "2'ere", "3'ere", "4'ere", "5'ere", "6'ere", "1 par", "2 par", "3 ens", "4 ens",
+				"Fuldt hus", "Small straight", "Large straight", "Chance", "Yatzy" };
+		;
+		for (int i = 0; i < 15; i++) {
+			lblResults[i] = new Label(names[i]);
+			scorePane.add(lblResults[i], 0, i);
+
+			txfResults[i] = new TextField();
+			scorePane.add(txfResults[i], 1, i);
+			txfResults[i].setEditable(false);
+			txfResults[i].setMaxWidth(w);
+		}
 		// add labels for results, add txfResults,
 		// add labels and text fields for sums, bonus and total.
 		// TODO
