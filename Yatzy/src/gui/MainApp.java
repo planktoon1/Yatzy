@@ -61,6 +61,10 @@ public class MainApp extends Application {
 		dicePane.setVgap(10);
 		dicePane.setStyle("-fx-border-color: black");
 
+		for (int i = 0; i < 5; i++) {
+			txfValues[i] = new TextField();
+			dicePane.add(txfValues[i], i, 0);
+		}
 		// add txfValues, chbHolds, lblRolled and btnRoll
 		// TODO
 
