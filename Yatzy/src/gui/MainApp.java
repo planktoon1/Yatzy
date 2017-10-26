@@ -67,9 +67,6 @@ public class MainApp extends Application {
 			txfValues[i].setEditable(false);
 			txfValues[i].setMinSize(50, 50);
 			txfValues[i].setMaxSize(50, 50);
-			txfValues[i].setEditable(false);
-			txfValues[i].setMinSize(50, 50);
-			txfValues[i].setMaxSize(50, 50);
 
 			cbxHolds[i] = new CheckBox();
 			dicePane.add(cbxHolds[i], i, 1);
