@@ -13,6 +13,7 @@ public class YatzyDiceTest {
 		boolean[] array = new boolean[5];
 		dice.throwDice(array);
 		System.out.println(Arrays.toString(dice.getValues()));
+
 		boolean[] array1 = { false, true, false, true, false };
 		dice.throwDice(array1);
 		int results = dice.getThrowCount();
