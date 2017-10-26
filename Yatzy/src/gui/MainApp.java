@@ -39,9 +39,9 @@ public class MainApp extends Application {
 	// Shows the obtained results.
 	// For results not set yet, the possible result of
 	// the actual face values of the 5 dice are shown.
-	private final TextField[] txfResults = new TextField[15];
+	private final TextField[] txfResults = new TextField[18];
 
-	private final Label[] lblResults = new Label[15];
+	private final Label[] lblResults = new Label[18];
 	// Shows points in sums, bonus and total.
 	private final TextField txfSumSame = new TextField(), txfBonus = new TextField(), txfSumOther = new TextField(),
 			txfTotal = new TextField();
@@ -94,10 +94,10 @@ public class MainApp extends Application {
 		scorePane.setStyle("-fx-border-color: black");
 		int w = 50; // width of the text fields
 
-		String[] names = { "1'ere", "2'ere", "3'ere", "4'ere", "5'ere", "6'ere", "1 par", "2 par", "3 ens", "4 ens",
-				"Fuldt hus", "Small straight", "Large straight", "Chance", "Yatzy" };
+		String[] names = { "1'ere", "2'ere", "3'ere", "4'ere", "5'ere", "6'ere", "Sum", "Bonus", "1 par", "2 par",
+				"3 ens", "4 ens", "Fuldt hus", "Small straight", "Large straight", "Chance", "Yatzy", "Sum" };
 		;
-		for (int i = 0; i < 15; i++) {
+		for (int i = 0; i < 18; i++) {
 			lblResults[i] = new Label(names[i]);
 			scorePane.add(lblResults[i], 0, i);
 
@@ -106,9 +106,16 @@ public class MainApp extends Application {
 			txfResults[i].setEditable(false);
 			txfResults[i].setMaxWidth(w);
 		}
-		// add labels for results, add txfResults,
-		// add labels and text fields for sums, bonus and total.
-		// TODO
+
+		// Todo:
+		// Change color of SumSame, etc.
+
+		scorePane.add(txfTotal, 3, 17);
+		txfSumSame.setEditable(false);
+		txfSumSame.setMaxWidth(w);
+
+		Label lblTotal = new Label("Total");
+		scorePane.add(lblTotal, 2, 17);
 
 	}
 
