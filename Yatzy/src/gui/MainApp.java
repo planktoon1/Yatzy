@@ -79,6 +79,7 @@ public class MainApp extends Application {
 			cbxHolds[i] = new CheckBox();
 			dicePane.add(cbxHolds[i], i, 1);
 			cbxHolds[i].setText("Hold");
+
 		}
 
 		dicePane.add(lblRolled, 5, 1);
@@ -116,12 +117,12 @@ public class MainApp extends Application {
 		}
 
 		txfResults[6].setUserData("selected");
+		txfResults[7].setUserData("selected");
 		txfResults[17].setUserData("selected");
 
-		// txfSumSame.setStyle("-fx-text-fill: red");
-
-		// Todo:
-		// Change color of SumSame, etc.
+		lblResults[6].setStyle("-fx-text-fill: red");
+		lblResults[7].setStyle("-fx-text-fill: red");
+		lblResults[17].setStyle("-fx-text-fill: red");
 
 		scorePane.add(txfTotal, 3, 17);
 		txfSumSame.setEditable(false);
@@ -164,11 +165,14 @@ public class MainApp extends Application {
 				TextField txf = (TextField) event.getSource();
 				txf.setStyle("-fx-background-color: yellow");
 				txf.setUserData("selected");
-
+				lblRolled.setText("Rolled " + dice.getThrowCount());
 				throwing = true;
 				updateSum();
-				updateTotal();
+				updateBonus();
 				resetResults();
+				updateTotal();
+				resetCheckBox();
+
 			}
 		}
 
@@ -219,7 +223,10 @@ public class MainApp extends Application {
 			if (txfResults[16].getUserData() != "selected") {
 				txfResults[16].setText("" + dice.yatzyPoints());
 			}
+		}
 
+		private void updateBonus() {
+			System.out.println(Integer.parseInt(txfResults[6].getText()));
 			if (Integer.parseInt(txfResults[6].getText()) >= 63) {
 				txfResults[7].setText("" + 50);
 			} else
@@ -246,7 +253,9 @@ public class MainApp extends Application {
 		}
 
 		private void updateTotal() {
-			int Total = Integer.parseInt(txfResults[6].getText() + txfResults[7].getText() + txfResults[17].getText());
+			int Total = Integer.parseInt(txfResults[6].getText()) + Integer.parseInt(txfResults[7].getText())
+					+ Integer.parseInt(txfResults[17].getText());
+			txfTotal.setText("" + Total);
 		}
 
 		private void resetResults() {
@@ -256,14 +265,11 @@ public class MainApp extends Application {
 				}
 			}
 		}
-		// Create a method for btnRoll's action.
-		// Hint: Create small helper methods to be used in the action method.
-		// TODO
 
-		// -------------------------------------------------------------------------
+		private void resetCheckBox() {
+			for (int i = 0; i < 5; i++)
+				cbxHolds[i].setSelected(false);
+		}
 
-		// Create a method for mouse click on one of the text fields in txfResults.
-		// Hint: Create small helper methods to be used in the mouse click method.
-		// TODO
 	}
 }
