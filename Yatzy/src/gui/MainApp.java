@@ -140,6 +140,7 @@ public class MainApp extends Application {
 
 		public void newRollAction() {
 			if (throwing) {
+				enableCheckBox();
 				boolean[] array = { cbxHolds[0].isSelected(), cbxHolds[1].isSelected(), cbxHolds[2].isSelected(),
 						cbxHolds[3].isSelected(), cbxHolds[4].isSelected() };
 
@@ -171,6 +172,7 @@ public class MainApp extends Application {
 				updateBonus();
 				resetResults();
 				updateTotal();
+				disableCheckBox();
 				resetCheckBox();
 
 			}
@@ -266,10 +268,21 @@ public class MainApp extends Application {
 			}
 		}
 
+		private void enableCheckBox() {
+			for (int i = 0; i < 5; i++)
+				cbxHolds[i].setDisable(false);
+
+		}
+
+		private void disableCheckBox() {
+			for (int i = 0; i < 5; i++)
+				cbxHolds[i].setDisable(true);
+
+		}
+
 		private void resetCheckBox() {
 			for (int i = 0; i < 5; i++)
 				cbxHolds[i].setSelected(false);
 		}
-
 	}
 }
