@@ -115,7 +115,10 @@ public class MainApp extends Application {
 
 		}
 
-		txfSumSame.setStyle("-fx-text-fill: red");
+		txfResults[6].setUserData("selected");
+		txfResults[17].setUserData("selected");
+
+		// txfSumSame.setStyle("-fx-text-fill: red");
 
 		// Todo:
 		// Change color of SumSame, etc.
@@ -161,7 +164,10 @@ public class MainApp extends Application {
 				TextField txf = (TextField) event.getSource();
 				txf.setStyle("-fx-background-color: yellow");
 				txf.setUserData("selected");
+
 				throwing = true;
+				updateSum();
+				updateTotal();
 				resetResults();
 			}
 		}
@@ -214,12 +220,33 @@ public class MainApp extends Application {
 				txfResults[16].setText("" + dice.yatzyPoints());
 			}
 
-			// if (sum >= 63) {
-			// txfResults[7].setText("" + 50);
-			//
-			// } else
-			// txfResults[7].setText("" + 0);
+			if (Integer.parseInt(txfResults[6].getText()) >= 63) {
+				txfResults[7].setText("" + 50);
+			} else
+				txfResults[7].setText("" + 0);
 
+		}
+
+		private void updateSum() {
+			int sumSame = 0;
+			for (int i = 0; i < 6; i++) {
+				if (txfResults[i].getUserData() == "selected") {
+					sumSame += Integer.parseInt(txfResults[i].getText());
+				}
+			}
+			txfResults[6].setText("" + sumSame);
+
+			int sumOther = 0;
+			for (int i = 8; i < 17; i++) {
+				if (txfResults[i].getUserData() == "selected") {
+					sumOther += Integer.parseInt(txfResults[i].getText());
+				}
+			}
+			txfResults[17].setText("" + sumOther);
+		}
+
+		private void updateTotal() {
+			int Total = Integer.parseInt(txfResults[6].getText() + txfResults[7].getText() + txfResults[17].getText());
 		}
 
 		private void resetResults() {
@@ -239,5 +266,4 @@ public class MainApp extends Application {
 		// Hint: Create small helper methods to be used in the mouse click method.
 		// TODO
 	}
-
 }
