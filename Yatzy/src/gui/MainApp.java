@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.YatzyDice;
@@ -49,6 +50,8 @@ public class MainApp extends Application {
 	// private final Label lblRolled = new Label();
 	private final Label lblRolled = new Label("Rolled: 0");
 	// private final Button btnRoll = new Button(" Roll ");
+
+	private boolean throwing = true;
 
 	private void initContent(GridPane pane) {
 		// pane.setGridLinesVisible(true);
@@ -103,6 +106,9 @@ public class MainApp extends Application {
 			scorePane.add(lblResults[i], 0, i);
 
 			txfResults[i] = new TextField();
+			if (i != 6 && i != 7 && i != 17) {
+				txfResults[i].setOnMouseClicked(event -> controller.mouseClicked(event));
+			}
 			scorePane.add(txfResults[i], 1, i);
 			txfResults[i].setEditable(false);
 			txfResults[i].setMaxWidth(w);
@@ -127,16 +133,39 @@ public class MainApp extends Application {
 		private YatzyDice dice = new YatzyDice();
 
 		public void newRollAction() {
-			boolean[] array = { cbxHolds[0].isSelected(), cbxHolds[1].isSelected(), cbxHolds[2].isSelected(),
-					cbxHolds[3].isSelected(), cbxHolds[4].isSelected() };
+			if (throwing) {
+				boolean[] array = { cbxHolds[0].isSelected(), cbxHolds[1].isSelected(), cbxHolds[2].isSelected(),
+						cbxHolds[3].isSelected(), cbxHolds[4].isSelected() };
 
-			dice.throwDice(array);
-			int s = 0;
-			for (int i : dice.getValues()) {
-				txfValues[s].setText("" + i);
-				s++;
+				dice.throwDice(array);
+				int s = 0;
+				for (int i : dice.getValues()) {
+					txfValues[s].setText("" + i);
+					s++;
+				}
+				lblRolled.setText("Rolled: " + dice.getThrowCount());
+
+				if (dice.getThrowCount() == 3) {
+					throwing = false;
+					fillPoints();
+					dice.resetThrowCount();
+				}
 			}
-			lblRolled.setText("Rolled: " + dice.getThrowCount());
+		}
+
+		private void mouseClicked(MouseEvent event) {
+			if (!throwing) {
+				TextField txf = (TextField) event.getSource();
+
+				txf.setStyle("-fx-background-color: grey");
+				txf.setUserData("selected");
+				lblRolled.setText("Rolled: " + dice.getThrowCount());
+				throwing = true;
+			}
+		}
+
+		private void fillPoints() {
+
 		}
 		// Create a method for btnRoll's action.
 		// Hint: Create small helper methods to be used in the action method.
