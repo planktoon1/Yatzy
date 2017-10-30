@@ -114,6 +114,8 @@ public class MainApp extends Application {
 			txfResults[i].setMaxWidth(w);
 		}
 
+		txfResults[6].setUserData("selected");
+		txfResults[17].setUserData("selected");
 		// txfSumSame.setStyle("-fx-background-color: -#cee51c");
 		// Todo:
 		// Change color of SumSame, etc.
@@ -161,11 +163,83 @@ public class MainApp extends Application {
 				txf.setUserData("selected");
 				lblRolled.setText("Rolled: " + dice.getThrowCount());
 				throwing = true;
+				updateSum();
+				resetResults();
 			}
 		}
 
 		private void fillPoints() {
 
+			if (txfResults[0].getUserData() != "selected") {
+				txfResults[0].setText("" + dice.sameValuePoints(1));
+			}
+			if (txfResults[1].getUserData() != "selected") {
+				txfResults[1].setText("" + dice.sameValuePoints(2));
+			}
+			if (txfResults[2].getUserData() != "selected") {
+				txfResults[2].setText("" + dice.sameValuePoints(3));
+			}
+			if (txfResults[3].getUserData() != "selected") {
+				txfResults[3].setText("" + dice.sameValuePoints(4));
+			}
+			if (txfResults[4].getUserData() != "selected") {
+				txfResults[4].setText("" + dice.sameValuePoints(5));
+			}
+			if (txfResults[5].getUserData() != "selected") {
+				txfResults[5].setText("" + dice.sameValuePoints(6));
+			}
+			if (txfResults[8].getUserData() != "selected") {
+				txfResults[8].setText("" + dice.onePairPoints());
+			}
+			if (txfResults[9].getUserData() != "selected") {
+				txfResults[9].setText("" + dice.twoPairPoints());
+			}
+			if (txfResults[10].getUserData() != "selected") {
+				txfResults[10].setText("" + dice.threeSamePoints());
+			}
+			if (txfResults[11].getUserData() != "selected") {
+				txfResults[11].setText("" + dice.fourSamePoints());
+			}
+			if (txfResults[12].getUserData() != "selected") {
+				txfResults[12].setText("" + dice.fullHousePoints());
+			}
+			if (txfResults[13].getUserData() != "selected") {
+				txfResults[13].setText("" + dice.smallStraightPoints());
+			}
+			if (txfResults[14].getUserData() != "selected") {
+				txfResults[14].setText("" + dice.largeStraightPoints());
+			}
+			if (txfResults[15].getUserData() != "selected") {
+				txfResults[15].setText("" + dice.chancePoints());
+			}
+			if (txfResults[16].getUserData() != "selected") {
+				txfResults[16].setText("" + dice.yatzyPoints());
+			}
+
+			// if (sum >= 63) {
+			// txfResults[7].setText("" + 50);
+			//
+			// } else
+			// txfResults[7].setText("" + 0);
+
+		}
+
+		private void updateSum() {
+			int sum = 0;
+			for (int i = 0; i < 6; i++) {
+				if (txfResults[i].getUserData() == "selected") {
+					sum += Integer.parseInt(txfResults[i].getText());
+				}
+			}
+			txfResults[6].setText("" + sum);
+		}
+
+		private void resetResults() {
+			for (TextField t : txfResults) {
+				if (t.getUserData() != "selected") {
+					t.setText("" + 0);
+				}
+			}
 		}
 		// Create a method for btnRoll's action.
 		// Hint: Create small helper methods to be used in the action method.
