@@ -47,8 +47,8 @@ public class MainApp extends Application {
 	private final TextField txfSumSame = new TextField(), txfBonus = new TextField(), txfSumOther = new TextField(),
 			txfTotal = new TextField();
 
-	// private final Label lblRolled = new Label();
 	private final Label lblRolled = new Label("Rolled: 0");
+
 	// private final Button btnRoll = new Button(" Roll ");
 
 	private boolean throwing = true;
@@ -112,9 +112,11 @@ public class MainApp extends Application {
 			scorePane.add(txfResults[i], 1, i);
 			txfResults[i].setEditable(false);
 			txfResults[i].setMaxWidth(w);
+
 		}
 
 		txfResults[6].setUserData("selected");
+		txfResults[7].setUserData("selected");
 		txfResults[17].setUserData("selected");
 		// txfSumSame.setStyle("-fx-background-color: -#cee51c");
 		// Todo:
@@ -157,9 +159,9 @@ public class MainApp extends Application {
 
 		private void mouseClicked(MouseEvent event) {
 			if (!throwing) {
-				TextField txf = (TextField) event.getSource();
 
-				txf.setStyle("-fx-background-color: grey");
+				TextField txf = (TextField) event.getSource();
+				txf.setStyle("-fx-background-color: yellow");
 				txf.setUserData("selected");
 				lblRolled.setText("Rolled: " + dice.getThrowCount());
 				throwing = true;
@@ -169,10 +171,10 @@ public class MainApp extends Application {
 		}
 
 		private void fillPoints() {
-
 			if (txfResults[0].getUserData() != "selected") {
 				txfResults[0].setText("" + dice.sameValuePoints(1));
 			}
+
 			if (txfResults[1].getUserData() != "selected") {
 				txfResults[1].setText("" + dice.sameValuePoints(2));
 			}
@@ -216,22 +218,33 @@ public class MainApp extends Application {
 				txfResults[16].setText("" + dice.yatzyPoints());
 			}
 
-			// if (sum >= 63) {
-			// txfResults[7].setText("" + 50);
-			//
-			// } else
-			// txfResults[7].setText("" + 0);
+			if (Integer.parseInt(txfResults[6].getText()) >= 63) {
+				txfResults[7].setText("" + 50);
+			} else
+				txfResults[7].setText("" + 0);
 
 		}
 
 		private void updateSum() {
-			int sum = 0;
+			int sumSame = 0;
 			for (int i = 0; i < 6; i++) {
 				if (txfResults[i].getUserData() == "selected") {
-					sum += Integer.parseInt(txfResults[i].getText());
+					sumSame += Integer.parseInt(txfResults[i].getText());
 				}
 			}
-			txfResults[6].setText("" + sum);
+			txfResults[6].setText("" + sumSame);
+
+			int sumOther = 0;
+			for (int i = 8; i < 17; i++) {
+				if (txfResults[i].getUserData() == "selected") {
+					sumOther += Integer.parseInt(txfResults[i].getText());
+				}
+			}
+			txfResults[17].setText("" + sumOther);
+		}
+
+		private void updateTotal() {
+			int Total = Integer.parseInt(txfResults[6].getText() + txfResults[7].getText() + txfResults[17].getText());
 		}
 
 		private void resetResults() {
@@ -251,5 +264,4 @@ public class MainApp extends Application {
 		// Hint: Create small helper methods to be used in the mouse click method.
 		// TODO
 	}
-
 }
