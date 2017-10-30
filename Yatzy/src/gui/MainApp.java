@@ -74,7 +74,7 @@ public class MainApp extends Application {
 			txfValues[i] = new TextField();
 			dicePane.add(txfValues[i], i, 0);
 			txfValues[i].setEditable(false);
-			txfValues[i].setStyle("-fx-font-size: 28");
+			txfValues[i].setStyle("-fx-font-size: 26; -fx-border-color: #B9E397; -fx-border-width: 2");
 			txfValues[i].setMinSize(50, 50);
 			txfValues[i].setMaxSize(50, 50);
 
