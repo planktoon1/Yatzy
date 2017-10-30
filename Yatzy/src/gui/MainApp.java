@@ -228,7 +228,6 @@ public class MainApp extends Application {
 		}
 
 		private void updateBonus() {
-			System.out.println(Integer.parseInt(txfResults[6].getText()));
 			if (Integer.parseInt(txfResults[6].getText()) >= 63) {
 				txfResults[7].setText("" + 50);
 			} else
