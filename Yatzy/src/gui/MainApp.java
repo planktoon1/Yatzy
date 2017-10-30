@@ -51,6 +51,8 @@ public class MainApp extends Application {
 
 	// private final Button btnRoll = new Button(" Roll ");
 
+	private boolean throwing = true;
+
 	private void initContent(GridPane pane) {
 		// pane.setGridLinesVisible(true);
 		pane.setPadding(new Insets(10));
@@ -104,10 +106,13 @@ public class MainApp extends Application {
 			scorePane.add(lblResults[i], 0, i);
 
 			txfResults[i] = new TextField();
+			if (i != 6 && i != 7 && i != 17) {
+				txfResults[i].setOnMouseClicked(event -> controller.mouseClicked(event));
+			}
 			scorePane.add(txfResults[i], 1, i);
 			txfResults[i].setEditable(false);
 			txfResults[i].setMaxWidth(w);
-			txfResults[i].setOnMouseClicked(event -> controller.mouseClicked(event));
+
 		}
 
 		txfSumSame.setStyle("-fx-text-fill: red");
@@ -130,57 +135,100 @@ public class MainApp extends Application {
 		private YatzyDice dice = new YatzyDice();
 
 		public void newRollAction() {
-			boolean[] array = { cbxHolds[0].isSelected(), cbxHolds[1].isSelected(), cbxHolds[2].isSelected(),
-					cbxHolds[3].isSelected(), cbxHolds[4].isSelected() };
+			if (throwing) {
+				boolean[] array = { cbxHolds[0].isSelected(), cbxHolds[1].isSelected(), cbxHolds[2].isSelected(),
+						cbxHolds[3].isSelected(), cbxHolds[4].isSelected() };
 
-			dice.throwDice(array);
-			int s = 0;
-			for (int i : dice.getValues()) {
-				txfValues[s].setText("" + i);
-				s++;
+				dice.throwDice(array);
+				int s = 0;
+				for (int i : dice.getValues()) {
+					txfValues[s].setText("" + i);
+					s++;
+				}
+				lblRolled.setText("Rolled: " + dice.getThrowCount());
+
+				if (dice.getThrowCount() == 3) {
+					throwing = false;
+					fillPoints();
+					dice.resetThrowCount();
+				}
 			}
-			lblRolled.setText("Rolled: " + dice.getThrowCount());
-			fillPoints();
 		}
 
 		private void mouseClicked(MouseEvent event) {
-			TextField txf = (TextField) event.getSource();
-			if (txf.getText() == "1 pair") {
-				txf.setStyle("-fx-text-fill: red");
-			}
+			if (!throwing) {
 
+				TextField txf = (TextField) event.getSource();
+				txf.setStyle("-fx-background-color: yellow");
+				txf.setUserData("selected");
+				throwing = true;
+				resetResults();
+			}
 		}
 
 		private void fillPoints() {
+			if (txfResults[0].getUserData() != "selected") {
+				txfResults[0].setText("" + dice.sameValuePoints(1));
+			}
 
-			int sum = dice.sameValuePoints(1) + dice.sameValuePoints(2) + dice.sameValuePoints(3)
-					+ dice.sameValuePoints(4) + dice.sameValuePoints(5) + dice.sameValuePoints(6);
+			if (txfResults[1].getUserData() != "selected") {
+				txfResults[1].setText("" + dice.sameValuePoints(2));
+			}
+			if (txfResults[2].getUserData() != "selected") {
+				txfResults[2].setText("" + dice.sameValuePoints(3));
+			}
+			if (txfResults[3].getUserData() != "selected") {
+				txfResults[3].setText("" + dice.sameValuePoints(4));
+			}
+			if (txfResults[4].getUserData() != "selected") {
+				txfResults[4].setText("" + dice.sameValuePoints(5));
+			}
+			if (txfResults[5].getUserData() != "selected") {
+				txfResults[5].setText("" + dice.sameValuePoints(6));
+			}
+			if (txfResults[8].getUserData() != "selected") {
+				txfResults[8].setText("" + dice.onePairPoints());
+			}
+			if (txfResults[9].getUserData() != "selected") {
+				txfResults[9].setText("" + dice.twoPairPoints());
+			}
+			if (txfResults[10].getUserData() != "selected") {
+				txfResults[10].setText("" + dice.threeSamePoints());
+			}
+			if (txfResults[11].getUserData() != "selected") {
+				txfResults[11].setText("" + dice.fourSamePoints());
+			}
+			if (txfResults[12].getUserData() != "selected") {
+				txfResults[12].setText("" + dice.fullHousePoints());
+			}
+			if (txfResults[13].getUserData() != "selected") {
+				txfResults[13].setText("" + dice.smallStraightPoints());
+			}
+			if (txfResults[14].getUserData() != "selected") {
+				txfResults[14].setText("" + dice.largeStraightPoints());
+			}
+			if (txfResults[15].getUserData() != "selected") {
+				txfResults[15].setText("" + dice.chancePoints());
+			}
+			if (txfResults[16].getUserData() != "selected") {
+				txfResults[16].setText("" + dice.yatzyPoints());
+			}
 
-			txfResults[0].setText("" + dice.sameValuePoints(1));
-			txfResults[1].setText("" + dice.sameValuePoints(2));
-			txfResults[2].setText("" + dice.sameValuePoints(3));
-			txfResults[3].setText("" + dice.sameValuePoints(4));
-			txfResults[4].setText("" + dice.sameValuePoints(5));
-			txfResults[5].setText("" + dice.sameValuePoints(6));
-			txfResults[6].setText("" + sum);
-			txfResults[8].setText("" + dice.onePairPoints());
-			txfResults[9].setText("" + dice.twoPairPoints());
-			txfResults[10].setText("" + dice.threeSamePoints());
-			txfResults[11].setText("" + dice.fourSamePoints());
-			txfResults[12].setText("" + dice.fullHousePoints());
-			txfResults[13].setText("" + dice.smallStraightPoints());
-			txfResults[14].setText("" + dice.largeStraightPoints());
-			txfResults[15].setText("" + dice.chancePoints());
-			txfResults[16].setText("" + dice.yatzyPoints());
-
-			if (sum >= 63) {
-				txfResults[7].setText("" + 50);
-
-			} else
-				txfResults[7].setText("" + 0);
+			// if (sum >= 63) {
+			// txfResults[7].setText("" + 50);
+			//
+			// } else
+			// txfResults[7].setText("" + 0);
 
 		}
 
+		private void resetResults() {
+			for (TextField t : txfResults) {
+				if (t.getUserData() != "selected") {
+					t.setText("" + 0);
+				}
+			}
+		}
 		// Create a method for btnRoll's action.
 		// Hint: Create small helper methods to be used in the action method.
 		// TODO
