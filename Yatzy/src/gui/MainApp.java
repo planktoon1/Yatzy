@@ -130,10 +130,12 @@ public class MainApp extends Application {
 			boolean[] array = { cbxHolds[0].isSelected(), cbxHolds[1].isSelected(), cbxHolds[2].isSelected(),
 					cbxHolds[3].isSelected(), cbxHolds[4].isSelected() };
 
-			// dice.throwDice(array);
-			// for (int i : dice.getValues()) {
-			// txfValues[i] = i;
-			// }
+			dice.throwDice(array);
+			int s = 0;
+			for (int i : dice.getValues()) {
+				txfValues[s].setText("" + i);
+				s++;
+			}
 		}
 		// Create a method for btnRoll's action.
 		// Hint: Create small helper methods to be used in the action method.
