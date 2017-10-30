@@ -38,6 +38,7 @@ public class MainApp extends Application {
 	// Shows the hold status of the 5 dice.
 	private final CheckBox[] cbxHolds = new CheckBox[5];
 	// Shows the obtained results.
+
 	// For results not set yet, the possible result of
 	// the actual face values of the 5 dice are shown.
 	private final TextField[] txfResults = new TextField[18];
@@ -51,6 +52,7 @@ public class MainApp extends Application {
 
 	// private final Button btnRoll = new Button(" Roll ");
 
+	// Whether or not we have more throws left (3 throws per. turn)
 	private boolean throwing = true;
 
 	private void initContent(GridPane pane) {
@@ -142,6 +144,11 @@ public class MainApp extends Application {
 	private class Controller {
 		private YatzyDice dice = new YatzyDice();
 
+		/**
+		 * Throws the dice that is not held updates the corrosponding textfields and
+		 * increments the lblRolled pre: Throwcount is < 3; (Throwing is a boolean
+		 * checking for this)
+		 */
 		public void newRollAction() {
 			if (throwing) {
 				enableCheckBox();
@@ -164,6 +171,11 @@ public class MainApp extends Application {
 			}
 		}
 
+		/**
+		 * Selects the clicket textfield. Selected fields are the final score for it's
+		 * category. See method comment on the helpmethods for futher explanation pre:
+		 * throwcount = 3;
+		 */
 		private void mouseClicked(MouseEvent event) {
 			if (!throwing) {
 
@@ -182,6 +194,9 @@ public class MainApp extends Application {
 			}
 		}
 
+		/**
+		 * Fills all the non selected textFields with the calculated points.
+		 */
 		private void fillPoints() {
 			if (txfResults[0].getUserData() != "selected") {
 				txfResults[0].setText("" + dice.sameValuePoints(1));
@@ -231,6 +246,10 @@ public class MainApp extends Application {
 			}
 		}
 
+		/**
+		 * Checks if bonus should be added, and adds the bonus to the bonus textfield
+		 * pre: txfResults[6].getText() != null;
+		 */
 		private void updateBonus() {
 			if (Integer.parseInt(txfResults[6].getText()) >= 63) {
 				txfResults[7].setText("" + 50);
@@ -239,6 +258,10 @@ public class MainApp extends Application {
 
 		}
 
+		/**
+		 * Calculates the two sum values and inserts them into the sum textfields. pre:
+		 * txfResults index 0-5 and 8-16 != null,
+		 */
 		private void updateSum() {
 			int sumSame = 0;
 			for (int i = 0; i < 6; i++) {
@@ -257,12 +280,18 @@ public class MainApp extends Application {
 			txfResults[17].setText("" + sumOther);
 		}
 
+		/**
+		 * Calculates the total points and adds it to the total textfield
+		 */
 		private void updateTotal() {
 			int Total = Integer.parseInt(txfResults[6].getText()) + Integer.parseInt(txfResults[7].getText())
 					+ Integer.parseInt(txfResults[17].getText());
 			txfTotal.setText("" + Total);
 		}
 
+		/**
+		 * Sets all the non selected textfields to 0
+		 */
 		private void resetResults() {
 			for (TextField t : txfResults) {
 				if (t.getUserData() != "selected") {
@@ -271,18 +300,27 @@ public class MainApp extends Application {
 			}
 		}
 
+		/**
+		 * Enables all the the checkboxes that determines if a dice is held or not
+		 */
 		private void enableCheckBox() {
 			for (int i = 0; i < 5; i++)
 				cbxHolds[i].setDisable(false);
 
 		}
 
+		/**
+		 * Disables all the the checkboxes that determines if a dice is held or not
+		 */
 		private void disableCheckBox() {
 			for (int i = 0; i < 5; i++)
 				cbxHolds[i].setDisable(true);
 
 		}
 
+		/**
+		 * Sets all the the checkboxes that determines if a dice is held or not to 0
+		 */
 		private void resetCheckBox() {
 			for (int i = 0; i < 5; i++)
 				cbxHolds[i].setSelected(false);
