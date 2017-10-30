@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.YatzyDice;
@@ -46,7 +47,8 @@ public class MainApp extends Application {
 	private final TextField txfSumSame = new TextField(), txfBonus = new TextField(), txfSumOther = new TextField(),
 			txfTotal = new TextField();
 
-	// private final Label lblRolled = new Label();
+	private final Label lblRolled = new Label("Rolled: 0");
+
 	// private final Button btnRoll = new Button(" Roll ");
 
 	private void initContent(GridPane pane) {
@@ -77,7 +79,6 @@ public class MainApp extends Application {
 			cbxHolds[i].setText("Hold");
 		}
 
-		Label lblRolled = new Label("Rolled:");
 		dicePane.add(lblRolled, 5, 1);
 
 		Button btnRoll = new Button("Roll");
@@ -106,9 +107,11 @@ public class MainApp extends Application {
 			scorePane.add(txfResults[i], 1, i);
 			txfResults[i].setEditable(false);
 			txfResults[i].setMaxWidth(w);
+			txfResults[i].setOnMouseClicked(event -> controller.mouseClicked(event));
 		}
 
-		// txfSumSame.setStyle("-fx-background-color: -#cee51c");
+		txfSumSame.setStyle("-fx-text-fill: red");
+
 		// Todo:
 		// Change color of SumSame, etc.
 
@@ -136,7 +139,48 @@ public class MainApp extends Application {
 				txfValues[s].setText("" + i);
 				s++;
 			}
+			lblRolled.setText("Rolled: " + dice.getThrowCount());
+			fillPoints();
 		}
+
+		private void mouseClicked(MouseEvent event) {
+			TextField txf = (TextField) event.getSource();
+			if (txf.getText() == "1 pair") {
+				txf.setStyle("-fx-text-fill: red");
+			}
+
+		}
+
+		private void fillPoints() {
+
+			int sum = dice.sameValuePoints(1) + dice.sameValuePoints(2) + dice.sameValuePoints(3)
+					+ dice.sameValuePoints(4) + dice.sameValuePoints(5) + dice.sameValuePoints(6);
+
+			txfResults[0].setText("" + dice.sameValuePoints(1));
+			txfResults[1].setText("" + dice.sameValuePoints(2));
+			txfResults[2].setText("" + dice.sameValuePoints(3));
+			txfResults[3].setText("" + dice.sameValuePoints(4));
+			txfResults[4].setText("" + dice.sameValuePoints(5));
+			txfResults[5].setText("" + dice.sameValuePoints(6));
+			txfResults[6].setText("" + sum);
+			txfResults[8].setText("" + dice.onePairPoints());
+			txfResults[9].setText("" + dice.twoPairPoints());
+			txfResults[10].setText("" + dice.threeSamePoints());
+			txfResults[11].setText("" + dice.fourSamePoints());
+			txfResults[12].setText("" + dice.fullHousePoints());
+			txfResults[13].setText("" + dice.smallStraightPoints());
+			txfResults[14].setText("" + dice.largeStraightPoints());
+			txfResults[15].setText("" + dice.chancePoints());
+			txfResults[16].setText("" + dice.yatzyPoints());
+
+			if (sum >= 63) {
+				txfResults[7].setText("" + 50);
+
+			} else
+				txfResults[7].setText("" + 0);
+
+		}
+
 		// Create a method for btnRoll's action.
 		// Hint: Create small helper methods to be used in the action method.
 		// TODO
