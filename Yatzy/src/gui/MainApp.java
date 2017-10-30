@@ -67,7 +67,8 @@ public class MainApp extends Application {
 		dicePane.setPadding(new Insets(10));
 		dicePane.setHgap(10);
 		dicePane.setVgap(10);
-		dicePane.setStyle("-fx-border-color: black");
+		dicePane.setStyle("-fx-background-color: #8ABD5F;");
+		pane.setStyle("-fx-background-color: #609732");
 
 		for (int i = 0; i < 5; i++) {
 			txfValues[i] = new TextField();
@@ -97,7 +98,7 @@ public class MainApp extends Application {
 		scorePane.setPadding(new Insets(10));
 		scorePane.setVgap(5);
 		scorePane.setHgap(10);
-		scorePane.setStyle("-fx-border-color: black");
+		scorePane.setStyle("-fx-background-color: #8ABD5F");
 		int w = 50; // width of the text fields
 
 		String[] names = { "1'ere", "2'ere", "3'ere", "4'ere", "5'ere", "6'ere", "Sum", "Bonus", "1 par", "2 par",
@@ -106,6 +107,7 @@ public class MainApp extends Application {
 		for (int i = 0; i < 18; i++) {
 			lblResults[i] = new Label(names[i]);
 			scorePane.add(lblResults[i], 0, i);
+			lblResults[i].setStyle("-fx-font-weight: bold");
 
 			txfResults[i] = new TextField();
 			if (i != 6 && i != 7 && i != 17) {
@@ -121,15 +123,16 @@ public class MainApp extends Application {
 		txfResults[7].setUserData("selected");
 		txfResults[17].setUserData("selected");
 
-		lblResults[6].setStyle("-fx-text-fill: red");
-		lblResults[7].setStyle("-fx-text-fill: red");
-		lblResults[17].setStyle("-fx-text-fill: red");
+		lblResults[6].setStyle("-fx-text-fill: red; -fx-font-weight: bold");
+		lblResults[7].setStyle("-fx-text-fill: red; -fx-font-weight: bold");
+		lblResults[17].setStyle("-fx-text-fill: red; -fx-font-weight: bold");
 
 		scorePane.add(txfTotal, 3, 17);
 		txfSumSame.setEditable(false);
 		txfSumSame.setMaxWidth(w);
 
 		Label lblTotal = new Label("Total");
+		lblTotal.setStyle("-fx-text-fill: red; -fx-font-weight: bold");
 		scorePane.add(lblTotal, 2, 17);
 
 	}
@@ -165,7 +168,7 @@ public class MainApp extends Application {
 			if (!throwing) {
 
 				TextField txf = (TextField) event.getSource();
-				txf.setStyle("-fx-background-color: yellow");
+				txf.setStyle("-fx-background-color: #B9E397");
 				txf.setUserData("selected");
 				lblRolled.setText("Rolled " + dice.getThrowCount());
 				throwing = true;
