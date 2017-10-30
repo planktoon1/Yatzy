@@ -47,6 +47,7 @@ public class MainApp extends Application {
 			txfTotal = new TextField();
 
 	// private final Label lblRolled = new Label();
+	private final Label lblRolled = new Label("Rolled: 0");
 	// private final Button btnRoll = new Button(" Roll ");
 
 	private void initContent(GridPane pane) {
@@ -77,7 +78,6 @@ public class MainApp extends Application {
 			cbxHolds[i].setText("Hold");
 		}
 
-		Label lblRolled = new Label("Rolled:");
 		dicePane.add(lblRolled, 5, 1);
 
 		Button btnRoll = new Button("Roll");
@@ -136,6 +136,7 @@ public class MainApp extends Application {
 				txfValues[s].setText("" + i);
 				s++;
 			}
+			lblRolled.setText("Rolled: " + dice.getThrowCount());
 		}
 		// Create a method for btnRoll's action.
 		// Hint: Create small helper methods to be used in the action method.
