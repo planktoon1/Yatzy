@@ -325,5 +325,21 @@ public class MainApp extends Application {
 			for (int i = 0; i < 5; i++)
 				cbxHolds[i].setSelected(false);
 		}
+
+		/**
+		 * Checks if the game is over, and ends the game if it is.
+		 */
+		private void endgame() {
+			boolean over = true;
+
+			for (TextField t : txfResults) {
+				if (t.getUserData() != "selected") {
+					over = false;
+				}
+				if (over = true) {
+
+				}
+			}
+		}
 	}
 }
