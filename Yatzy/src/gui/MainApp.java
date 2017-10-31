@@ -3,6 +3,8 @@ package gui;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -41,9 +43,9 @@ public class MainApp extends Application {
 
 	// For results not set yet, the possible result of
 	// the actual face values of the 5 dice are shown.
-	private final TextField[] txfResults = new TextField[18];
+	private final TextField[] txfResults = new TextField[15];
 
-	private final Label[] lblResults = new Label[18];
+	private final Label[] lblResults = new Label[15];
 	// Shows points in sums, bonus and total.
 	private final TextField txfSumSame = new TextField(), txfBonus = new TextField(), txfSumOther = new TextField(),
 			txfTotal = new TextField();
@@ -103,39 +105,54 @@ public class MainApp extends Application {
 		scorePane.setStyle("-fx-background-color: #8ABD5F");
 		int w = 50; // width of the text fields
 
-		String[] names = { "1'ere", "2'ere", "3'ere", "4'ere", "5'ere", "6'ere", "Sum", "Bonus", "1 par", "2 par",
-				"3 ens", "4 ens", "Fuldt hus", "Small straight", "Large straight", "Chance", "Yatzy", "Sum" };
+		String[] names = { "1'ere", "2'ere", "3'ere", "4'ere", "5'ere", "6'ere", "1 par", "2 par", "3 ens", "4 ens",
+				"Fuldt hus", "Small straight", "Large straight", "Chance", "Yatzy" };
 		;
-		for (int i = 0; i < 18; i++) {
+		for (int i = 0; i < 15; i++) {
 			lblResults[i] = new Label(names[i]);
 			scorePane.add(lblResults[i], 0, i);
 			lblResults[i].setStyle("-fx-font-weight: bold");
 
 			txfResults[i] = new TextField();
-			if (i != 6 && i != 7 && i != 17) {
-				txfResults[i].setOnMouseClicked(event -> controller.mouseClicked(event));
-			}
+			txfResults[i].setOnMouseClicked(event -> controller.mouseClicked(event));
+
 			scorePane.add(txfResults[i], 1, i);
 			txfResults[i].setEditable(false);
 			txfResults[i].setMaxWidth(w);
 
 		}
 
-		txfResults[6].setUserData("selected");
-		txfResults[7].setUserData("selected");
-		txfResults[17].setUserData("selected");
+		Label lblSumSame = new Label("Sum");
+		lblSumSame.setStyle("-fx-font-weight: bold");
+		scorePane.add(lblSumSame, 2, 5);
 
-		lblResults[6].setStyle("-fx-text-fill: red; -fx-font-weight: bold");
-		lblResults[7].setStyle("-fx-text-fill: red; -fx-font-weight: bold");
-		lblResults[17].setStyle("-fx-text-fill: red; -fx-font-weight: bold");
+		Label lblBonus = new Label("Bonus");
+		lblBonus.setStyle("-fx-font-weight: bold");
+		scorePane.add(lblBonus, 4, 5);
 
-		scorePane.add(txfTotal, 3, 17);
+		Label lblSumOther = new Label("Sum");
+		lblSumOther.setStyle("-fx-font-weight: bold");
+		scorePane.add(lblSumOther, 2, 14);
+
+		Label lblTotal = new Label("Total");
+		lblTotal.setStyle("-fx-font-weight: bold");
+		scorePane.add(lblTotal, 4, 14);
+
+		scorePane.add(txfSumSame, 3, 5);
 		txfSumSame.setEditable(false);
 		txfSumSame.setMaxWidth(w);
 
-		Label lblTotal = new Label("Total");
-		lblTotal.setStyle("-fx-text-fill: red; -fx-font-weight: bold");
-		scorePane.add(lblTotal, 2, 17);
+		scorePane.add(txfBonus, 5, 5);
+		txfBonus.setEditable(false);
+		txfBonus.setMaxWidth(w);
+
+		scorePane.add(txfSumOther, 3, 14);
+		txfSumOther.setEditable(false);
+		txfSumOther.setMaxWidth(w);
+
+		scorePane.add(txfTotal, 5, 14);
+		txfTotal.setEditable(false);
+		txfTotal.setMaxWidth(w);
 
 	}
 
@@ -172,8 +189,8 @@ public class MainApp extends Application {
 		}
 
 		/**
-		 * Selects the clicket textfield. Selected fields are the final score for it's
-		 * category. See method comment on the helpmethods for futher explanation pre:
+		 * Selects the clicked textfield. Selected fields are the final score for it's
+		 * category. See method comment on the helpmethods for further explanation pre:
 		 * throwcount = 3;
 		 */
 		private void mouseClicked(MouseEvent event) {
@@ -190,6 +207,7 @@ public class MainApp extends Application {
 				updateTotal();
 				disableCheckBox();
 				resetCheckBox();
+				endgame();
 
 			}
 		}
@@ -217,32 +235,32 @@ public class MainApp extends Application {
 			if (txfResults[5].getUserData() != "selected") {
 				txfResults[5].setText("" + dice.sameValuePoints(6));
 			}
+			if (txfResults[6].getUserData() != "selected") {
+				txfResults[6].setText("" + dice.onePairPoints());
+			}
+			if (txfResults[7].getUserData() != "selected") {
+				txfResults[7].setText("" + dice.twoPairPoints());
+			}
 			if (txfResults[8].getUserData() != "selected") {
-				txfResults[8].setText("" + dice.onePairPoints());
+				txfResults[8].setText("" + dice.threeSamePoints());
 			}
 			if (txfResults[9].getUserData() != "selected") {
-				txfResults[9].setText("" + dice.twoPairPoints());
+				txfResults[9].setText("" + dice.fourSamePoints());
 			}
 			if (txfResults[10].getUserData() != "selected") {
-				txfResults[10].setText("" + dice.threeSamePoints());
+				txfResults[10].setText("" + dice.fullHousePoints());
 			}
 			if (txfResults[11].getUserData() != "selected") {
-				txfResults[11].setText("" + dice.fourSamePoints());
+				txfResults[11].setText("" + dice.smallStraightPoints());
 			}
 			if (txfResults[12].getUserData() != "selected") {
-				txfResults[12].setText("" + dice.fullHousePoints());
+				txfResults[12].setText("" + dice.largeStraightPoints());
 			}
 			if (txfResults[13].getUserData() != "selected") {
-				txfResults[13].setText("" + dice.smallStraightPoints());
+				txfResults[13].setText("" + dice.chancePoints());
 			}
 			if (txfResults[14].getUserData() != "selected") {
-				txfResults[14].setText("" + dice.largeStraightPoints());
-			}
-			if (txfResults[15].getUserData() != "selected") {
-				txfResults[15].setText("" + dice.chancePoints());
-			}
-			if (txfResults[16].getUserData() != "selected") {
-				txfResults[16].setText("" + dice.yatzyPoints());
+				txfResults[14].setText("" + dice.yatzyPoints());
 			}
 		}
 
@@ -251,10 +269,10 @@ public class MainApp extends Application {
 		 * pre: txfResults[6].getText() != null;
 		 */
 		private void updateBonus() {
-			if (Integer.parseInt(txfResults[6].getText()) >= 63) {
-				txfResults[7].setText("" + 50);
+			if (Integer.parseInt(txfSumSame.getText()) >= 63) {
+				txfBonus.setText("" + 50);
 			} else
-				txfResults[7].setText("" + 0);
+				txfBonus.setText("" + 0);
 
 		}
 
@@ -269,23 +287,23 @@ public class MainApp extends Application {
 					sumSame += Integer.parseInt(txfResults[i].getText());
 				}
 			}
-			txfResults[6].setText("" + sumSame);
+			txfSumSame.setText("" + sumSame);
 
 			int sumOther = 0;
-			for (int i = 8; i < 17; i++) {
+			for (int i = 6; i < 15; i++) {
 				if (txfResults[i].getUserData() == "selected") {
 					sumOther += Integer.parseInt(txfResults[i].getText());
 				}
 			}
-			txfResults[17].setText("" + sumOther);
+			txfSumOther.setText("" + sumOther);
 		}
 
 		/**
 		 * Calculates the total points and adds it to the total textfield
 		 */
 		private void updateTotal() {
-			int Total = Integer.parseInt(txfResults[6].getText()) + Integer.parseInt(txfResults[7].getText())
-					+ Integer.parseInt(txfResults[17].getText());
+			int Total = Integer.parseInt(txfSumSame.getText()) + Integer.parseInt(txfBonus.getText())
+					+ Integer.parseInt(txfSumOther.getText());
 			txfTotal.setText("" + Total);
 		}
 
@@ -326,7 +344,6 @@ public class MainApp extends Application {
 				cbxHolds[i].setSelected(false);
 		}
 
-		// ere
 		/**
 		 * Checks if the game is over, and ends the game if it is.
 		 */
@@ -336,10 +353,21 @@ public class MainApp extends Application {
 			for (TextField t : txfResults) {
 				if (t.getUserData() != "selected") {
 					over = false;
-				}
-				if (over = true) {
 
 				}
+
+			}
+			if (over == true) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Thanks for playing");
+				alert.setHeaderText("Game over");
+				String s = "Total: " + txfTotal.getText();
+
+				alert.setContentText(s);
+
+				alert.showAndWait();
+				// wait for the dialog to close
+
 			}
 		}
 	}
