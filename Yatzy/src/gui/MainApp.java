@@ -266,7 +266,7 @@ public class MainApp extends Application {
 
 		/**
 		 * Checks if bonus should be added, and adds the bonus to the bonus textfield
-		 * pre: txfResults[6].getText() != null;
+		 * pre: txfSumSame.getText() != null;
 		 */
 		private void updateBonus() {
 			if (Integer.parseInt(txfSumSame.getText()) >= 63) {
@@ -278,7 +278,7 @@ public class MainApp extends Application {
 
 		/**
 		 * Calculates the two sum values and inserts them into the sum textfields. pre:
-		 * txfResults index 0-5 and 8-16 != null,
+		 * txfResults index 0-14 != null,
 		 */
 		private void updateSum() {
 			int sumSame = 0;
@@ -358,7 +358,7 @@ public class MainApp extends Application {
 
 			}
 			if (over == true) {
-				Alert alert = new Alert(AlertType.INFORMATION);
+				Alert alert = new Alert(AlertType.NONE);
 				alert.setTitle("Thanks for playing");
 				alert.setHeaderText("Game over");
 				String s = "Total: " + txfTotal.getText();
