@@ -326,6 +326,7 @@ public class MainApp extends Application {
 				cbxHolds[i].setSelected(false);
 		}
 
+		// ere
 		/**
 		 * Checks if the game is over, and ends the game if it is.
 		 */
